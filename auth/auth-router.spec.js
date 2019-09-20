@@ -1,18 +1,20 @@
 const request = require('supertest');
 const db = require('../database/dbConfig.js')
 const server = require('../api/server.js');
+// const auth = require('../jokes/jokes-model.js')
 
 describe('the server', () => {
     describe('GET /', () => {
-        
-    let token;
-    let cookies;
-
         it('should run the testing env', () => {
             expect(process.env.DB_ENV).toBe('testing');
         })
     })
 });
+
+
+beforeEach(async () => {
+    await db('users').truncate();
+})
 
 describe('POST /login', function(){
     it('it responds with 401 status code if bad username or password', function(done) {
@@ -45,7 +47,7 @@ describe('POST /register', function(){
         request(server)
             .post('/api/auth/register')
             .type('json')
-            .send('{"username":"testing","password":"testing"}')
+            .send('{"username":"testing123","password":"testing123"}')
             .expect(201)
             .end(function(err, res) {
                 if (err) return done(err);
